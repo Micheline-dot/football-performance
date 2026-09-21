@@ -1,0 +1,33 @@
+# Entornos virtuales de Python
+.venv/
+venv/
+env/
+
+# Caché de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node.js
+node_modules/
+web/node_modules/
+
+# Archivos de compilación de Vite
+web/dist/
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Videos generados o de prueba
+*.avi
+*.mp4
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Variables de entorno
+.env
+.env.*
+!.env.example

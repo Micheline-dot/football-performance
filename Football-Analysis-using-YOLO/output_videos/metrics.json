@@ -1,0 +1,412 @@
+{
+  "jugadores_detectados": 12,
+  "velocidad_maxima": 28.7,
+  "distancia_maxima": 14.41,
+  "jugadores": [
+    {
+      "id": 185,
+      "velocidad": 28.7,
+      "distancia": 7.86
+    },
+    {
+      "id": 15,
+      "velocidad": 23.24,
+      "distancia": 5.07
+    },
+    {
+      "id": 99,
+      "velocidad": 20.72,
+      "distancia": 6.42
+    },
+    {
+      "id": 165,
+      "velocidad": 20.27,
+      "distancia": 13.23
+    },
+    {
+      "id": 101,
+      "velocidad": 19.77,
+      "distancia": 2.75
+    },
+    {
+      "id": 38,
+      "velocidad": 19.05,
+      "distancia": 2.65
+    },
+    {
+      "id": 118,
+      "velocidad": 17.62,
+      "distancia": 10.59
+    },
+    {
+      "id": 84,
+      "velocidad": 17.59,
+      "distancia": 7.61
+    },
+    {
+      "id": 156,
+      "velocidad": 17.09,
+      "distancia": 9.72
+    },
+    {
+      "id": 2,
+      "velocidad": 17.07,
+      "distancia": 2.37
+    },
+    {
+      "id": 192,
+      "velocidad": 16.91,
+      "distancia": 2.35
+    },
+    {
+      "id": 157,
+      "velocidad": 15.58,
+      "distancia": 2.16
+    },
+    {
+      "id": 116,
+      "velocidad": 15.42,
+      "distancia": 2.97
+    },
+    {
+      "id": 119,
+      "velocidad": 14.8,
+      "distancia": 14.41
+    },
+    {
+      "id": 168,
+      "velocidad": 13.94,
+      "distancia": 4.86
+    },
+    {
+      "id": 85,
+      "velocidad": 13.81,
+      "distancia": 6.36
+    },
+    {
+      "id": 154,
+      "velocidad": 13.78,
+      "distancia": 3.92
+    },
+    {
+      "id": 75,
+      "velocidad": 13.41,
+      "distancia": 8.05
+    },
+    {
+      "id": 18,
+      "velocidad": 13.39,
+      "distancia": 9.51
+    },
+    {
+      "id": 93,
+      "velocidad": 12.01,
+      "distancia": 1.67
+    },
+    {
+      "id": 80,
+      "velocidad": 11.79,
+      "distancia": 4.52
+    },
+    {
+      "id": 152,
+      "velocidad": 11.7,
+      "distancia": 4.31
+    },
+    {
+      "id": 98,
+      "velocidad": 11.61,
+      "distancia": 5.44
+    },
+    {
+      "id": 177,
+      "velocidad": 11.35,
+      "distancia": 3.47
+    },
+    {
+      "id": 176,
+      "velocidad": 9.68,
+      "distancia": 3.83
+    },
+    {
+      "id": 56,
+      "velocidad": 9.21,
+      "distancia": 2.49
+    },
+    {
+      "id": 142,
+      "velocidad": 9.05,
+      "distancia": 1.26
+    },
+    {
+      "id": 102,
+      "velocidad": 9.01,
+      "distancia": 1.97
+    },
+    {
+      "id": 46,
+      "velocidad": 8.82,
+      "distancia": 2.67
+    },
+    {
+      "id": 153,
+      "velocidad": 8.11,
+      "distancia": 1.13
+    },
+    {
+      "id": 100,
+      "velocidad": 7.71,
+      "distancia": 1.07
+    },
+    {
+      "id": 187,
+      "velocidad": 6.47,
+      "distancia": 0.9
+    },
+    {
+      "id": 97,
+      "velocidad": 5.93,
+      "distancia": 0.82
+    },
+    {
+      "id": 62,
+      "velocidad": 4.34,
+      "distancia": 0.6
+    },
+    {
+      "id": 4,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 7,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 6,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 14,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 19,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 39,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 41,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 40,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 43,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 45,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 47,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 49,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 51,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 52,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 53,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 58,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 67,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 70,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 73,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 76,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 79,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 81,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 83,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 82,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 91,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 94,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 103,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 113,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 114,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 124,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 127,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 130,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 132,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 134,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 137,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 139,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 141,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 143,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 147,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 159,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 161,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 163,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 164,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 186,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 188,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 195,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    },
+    {
+      "id": 199,
+      "velocidad": 0.0,
+      "distancia": 0.0
+    }
+  ]
+}

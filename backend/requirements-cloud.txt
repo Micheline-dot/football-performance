@@ -1,0 +1,14 @@
+fastapi==0.141.1
+uvicorn==0.53.0
+python-multipart==0.0.32
+
+numpy==2.5.3
+pandas
+opencv-python-headless==5.0.0.93
+pillow==12.3.0
+matplotlib==3.10.7
+scikit-learn
+
+ultralytics
+supervision
+roboflow
