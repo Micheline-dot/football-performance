@@ -13,19 +13,27 @@ from utils import get_center_of_bbox, get_bbox_width, get_foot_position
 
 
 class Tracker:
+
     def __init__(self, model_path):
         self.model = YOLO(model_path)
         self.tracker = sv.ByteTrack()
 
     def add_position_to_tracks(self, tracks):
+
         for object_name, object_tracks in tracks.items():
+
             for frame_num, track in enumerate(object_tracks):
+
                 for track_id, track_info in track.items():
+
                     bbox = track_info['bbox']
+
                     if object_name == 'ball':
                         position = get_center_of_bbox(bbox)
+
                     else:
                         position = get_foot_position(bbox)
+
                     tracks[object_name][frame_num][track_id]['position'] = position
 
     def interpolate_ball_positions(self, ball_positions):
@@ -33,9 +41,11 @@ class Tracker:
         Makes ball tracking robust when the ball is not detected in some
         frames (or in the whole video).
         """
+
         rows = []
 
         for frame_tracks in ball_positions:
+
             bbox = frame_tracks.get(1, {}).get('bbox')
 
             if bbox is None or len(bbox) != 4:
@@ -43,7 +53,6 @@ class Tracker:
 
             rows.append(bbox)
 
-        # Keep the same number of frames.
         if not rows:
             return []
 
@@ -52,24 +61,26 @@ class Tracker:
             columns=['x1', 'y1', 'x2', 'y2']
         )
 
-        # Replace invalid numeric values with NaN.
         df_ball_positions = df_ball_positions.replace(
-            [np.inf, -np.inf], np.nan
+            [np.inf, -np.inf],
+            np.nan
         )
 
-        # Fill missing detections using interpolation and nearest valid value.
         df_ball_positions = df_ball_positions.interpolate(
             limit_direction='both'
         )
+
         df_ball_positions = df_ball_positions.bfill().ffill()
 
-        # If the ball was never detected, use a safe zero bbox.
         if df_ball_positions.isna().all().all():
+
             df_ball_positions = pd.DataFrame(
                 np.zeros((len(rows), 4)),
                 columns=['x1', 'y1', 'x2', 'y2']
             )
+
         else:
+
             df_ball_positions = df_ball_positions.fillna(0)
 
         ball_positions = [
@@ -80,14 +91,19 @@ class Tracker:
         return ball_positions
 
     def detect_frames(self, frames):
-        batch_size = 20
+
+        # Reducido para disminuir el consumo de RAM en Render
+        batch_size = 2
+
         detections = []
 
         for i in range(0, len(frames), batch_size):
+
             detections_batch = self.model.predict(
                 frames[i:i + batch_size],
                 conf=0.1
             )
+
             detections += detections_batch
 
         return detections
@@ -98,13 +114,16 @@ class Tracker:
         read_from_stub=False,
         stub_path=None
     ):
+
         if (
             read_from_stub
             and stub_path is not None
             and os.path.exists(stub_path)
         ):
+
             with open(stub_path, 'rb') as f:
                 tracks = pickle.load(f)
+
             return tracks
 
         detections = self.detect_frames(frames)
@@ -116,16 +135,23 @@ class Tracker:
         }
 
         for frame_num, detection in enumerate(detections):
+
             cls_names = detection.names
-            cls_names_inv = {v: k for k, v in cls_names.items()}
+            cls_names_inv = {
+                v: k for k, v in cls_names.items()
+            }
 
-            detection_supervision = sv.Detections.from_ultralytics(detection)
+            detection_supervision = sv.Detections.from_ultralytics(
+                detection
+            )
 
-            # Convert goalkeeper to player.
+            # Convert goalkeeper to player
             for object_ind, class_id in enumerate(
                 detection_supervision.class_id
             ):
+
                 if cls_names[class_id] == "goalkeeper":
+
                     detection_supervision.class_id[object_ind] = (
                         cls_names_inv["player"]
                     )
@@ -139,39 +165,54 @@ class Tracker:
             tracks["ball"].append({})
 
             for frame_detection in detection_with_tracks:
+
                 bbox = frame_detection[0].tolist()
                 cls_id = frame_detection[3]
                 track_id = frame_detection[4]
 
                 if cls_id == cls_names_inv['player']:
+
                     tracks["players"][frame_num][track_id] = {
                         "bbox": bbox
                     }
 
                 if cls_id == cls_names_inv['referee']:
+
                     tracks["referees"][frame_num][track_id] = {
                         "bbox": bbox
                     }
 
-            # Ball does not need ByteTrack here; keep id 1.
+            # Ball does not need ByteTrack here; keep id 1
             for frame_detection in detection_supervision:
+
                 bbox = frame_detection[0].tolist()
                 cls_id = frame_detection[3]
 
                 if cls_id == cls_names_inv['ball']:
+
                     tracks["ball"][frame_num][1] = {
                         "bbox": bbox
                     }
 
         if stub_path is not None:
+
             with open(stub_path, 'wb') as f:
                 pickle.dump(tracks, f)
 
         return tracks
 
-    def draw_ellipse(self, frame, bbox, color, track_id=None):
+    def draw_ellipse(
+        self,
+        frame,
+        bbox,
+        color,
+        track_id=None
+    ):
+
         y2 = int(bbox[3])
+
         x_center, _ = get_center_of_bbox(bbox)
+
         width = get_bbox_width(bbox)
 
         cv2.ellipse(
@@ -188,12 +229,15 @@ class Tracker:
 
         rectangle_width = 40
         rectangle_height = 20
+
         x1_rect = x_center - rectangle_width // 2
         x2_rect = x_center + rectangle_width // 2
+
         y1_rect = (y2 - rectangle_height // 2) + 15
         y2_rect = (y2 + rectangle_height // 2) + 15
 
         if track_id is not None:
+
             cv2.rectangle(
                 frame,
                 (int(x1_rect), int(y1_rect)),
@@ -203,6 +247,7 @@ class Tracker:
             )
 
             x1_text = x1_rect + 12
+
             if track_id > 99:
                 x1_text -= 10
 
@@ -218,8 +263,15 @@ class Tracker:
 
         return frame
 
-    def draw_traingle(self, frame, bbox, color):
+    def draw_traingle(
+        self,
+        frame,
+        bbox,
+        color
+    ):
+
         y = int(bbox[1])
+
         x, _ = get_center_of_bbox(bbox)
 
         triangle_points = np.array([
@@ -229,10 +281,19 @@ class Tracker:
         ])
 
         cv2.drawContours(
-            frame, [triangle_points], 0, color, cv2.FILLED
+            frame,
+            [triangle_points],
+            0,
+            color,
+            cv2.FILLED
         )
+
         cv2.drawContours(
-            frame, [triangle_points], 0, (0, 0, 0), 2
+            frame,
+            [triangle_points],
+            0,
+            (0, 0, 0),
+            2
         )
 
         return frame
@@ -243,11 +304,14 @@ class Tracker:
         frame_num,
         team_ball_control
     ):
+
         overlay = frame.copy()
 
         h, w = frame.shape[:2]
+
         x1 = max(0, w - 550)
         y1 = max(0, h - 150)
+
         x2 = w - 20
         y2 = h - 20
 
@@ -260,6 +324,7 @@ class Tracker:
         )
 
         alpha = 0.4
+
         cv2.addWeighted(
             overlay,
             alpha,
@@ -269,11 +334,14 @@ class Tracker:
             frame
         )
 
-        team_ball_control_till_frame = team_ball_control[:frame_num + 1]
+        team_ball_control_till_frame = (
+            team_ball_control[:frame_num + 1]
+        )
 
         team_1_num_frames = np.sum(
             team_ball_control_till_frame == 1
         )
+
         team_2_num_frames = np.sum(
             team_ball_control_till_frame == 2
         )
@@ -281,9 +349,12 @@ class Tracker:
         total = team_1_num_frames + team_2_num_frames
 
         if total > 0:
+
             team_1 = team_1_num_frames / total
             team_2 = team_2_num_frames / total
+
         else:
+
             team_1 = 0
             team_2 = 0
 
@@ -309,10 +380,17 @@ class Tracker:
 
         return frame
 
-    def draw_annotations(self, video_frames, tracks, team_ball_control):
+    def draw_annotations(
+        self,
+        video_frames,
+        tracks,
+        team_ball_control
+    ):
+
         output_video_frames = []
 
         for frame_num, frame in enumerate(video_frames):
+
             frame = frame.copy()
 
             player_dict = tracks["players"][frame_num]
@@ -321,7 +399,12 @@ class Tracker:
 
             # Draw Players
             for track_id, player in player_dict.items():
-                color = player.get("team_color", (0, 0, 255))
+
+                color = player.get(
+                    "team_color",
+                    (0, 0, 255)
+                )
+
                 frame = self.draw_ellipse(
                     frame,
                     player["bbox"],
@@ -330,6 +413,7 @@ class Tracker:
                 )
 
                 if player.get('has_ball', False):
+
                     frame = self.draw_traingle(
                         frame,
                         player["bbox"],
@@ -338,6 +422,7 @@ class Tracker:
 
             # Draw Referees
             for _, referee in referee_dict.items():
+
                 frame = self.draw_ellipse(
                     frame,
                     referee["bbox"],
@@ -346,6 +431,7 @@ class Tracker:
 
             # Draw ball
             for _, ball in ball_dict.items():
+
                 frame = self.draw_traingle(
                     frame,
                     ball["bbox"],

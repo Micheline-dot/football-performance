@@ -1,5 +1,6 @@
 import cv2
 
+
 def read_video(video_path):
     cap = cv2.VideoCapture(video_path)
     frames = []
@@ -10,17 +11,21 @@ def read_video(video_path):
         if not ret:
             break
 
-        # Reducir resolución para disminuir el uso de memoria
-        frame = cv2.resize(frame, (1280, 720))
+        # Reducir resolución para disminuir el uso de memoria en Render
+        frame = cv2.resize(frame, (640, 360))
 
         frames.append(frame)
 
     cap.release()
+
     return frames
 
 
 def save_video(output_video_frames, output_video_path):
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    if not output_video_frames:
+        raise RuntimeError("No hay frames para guardar el video.")
+
+    fourcc = cv2.VideoWriter_fourcc(*"XVID")
 
     out = cv2.VideoWriter(
         output_video_path,
