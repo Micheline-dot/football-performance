@@ -1,8 +1,34 @@
 import cv2
 
 
+def get_center_of_bbox(bbox):
+    x1, y1, x2, y2 = bbox
+    return int((x1 + x2) / 2), int((y1 + y2) / 2)
+
+
+def get_bbox_width(bbox):
+    return bbox[2] - bbox[0]
+
+
+def measure_distance(p1, p2):
+    return (
+        (p1[0] - p2[0]) ** 2 +
+        (p1[1] - p2[1]) ** 2
+    ) ** 0.5
+
+
+def measure_xy_distance(p1, p2):
+    return p1[0] - p2[0], p1[1] - p2[1]
+
+
+def get_foot_position(bbox):
+    x1, y1, x2, y2 = bbox
+    return int((x1 + x2) / 2), int(y2)
+
+
 def read_video(video_path):
     cap = cv2.VideoCapture(video_path)
+
     frames = []
 
     while True:
@@ -11,8 +37,13 @@ def read_video(video_path):
         if not ret:
             break
 
-        # Reducir resolución para disminuir el uso de memoria en Render
-        frame = cv2.resize(frame, (640, 360))
+        # Resolución reducida para trabajar dentro
+        # del límite de memoria de Render.
+        frame = cv2.resize(
+            frame,
+            (320, 180),
+            interpolation=cv2.INTER_AREA
+        )
 
         frames.append(frame)
 
@@ -23,7 +54,11 @@ def read_video(video_path):
 
 def save_video(output_video_frames, output_video_path):
     if not output_video_frames:
-        raise RuntimeError("No hay frames para guardar el video.")
+        raise RuntimeError(
+            "No hay frames para guardar el video."
+        )
+
+    height, width = output_video_frames[0].shape[:2]
 
     fourcc = cv2.VideoWriter_fourcc(*"XVID")
 
@@ -31,11 +66,13 @@ def save_video(output_video_frames, output_video_path):
         output_video_path,
         fourcc,
         24,
-        (
-            output_video_frames[0].shape[1],
-            output_video_frames[0].shape[0]
-        )
+        (width, height)
     )
+
+    if not out.isOpened():
+        raise RuntimeError(
+            "No se pudo crear el archivo de video de salida."
+        )
 
     for frame in output_video_frames:
         out.write(frame)
