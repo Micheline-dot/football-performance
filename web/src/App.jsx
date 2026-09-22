@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || 'https://football-performance.onrender.com'
+
 function App() {
   // ==============================
   // ESTADO GENERAL
@@ -34,7 +37,7 @@ function App() {
   // ==============================
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/estado')
+    fetch(`${API_BASE_URL}/api/estado`)
       .then((respuesta) => {
         if (!respuesta.ok) {
           throw new Error('Error de conexión')
@@ -142,7 +145,7 @@ function App() {
 
     // FastAPI entrega el archivo con Content-Disposition: attachment,
     // por lo que Chrome inicia una descarga real en lugar de reproducirlo.
-    window.location.href = `http://127.0.0.1:5000/api/descargar-video?nombre=${encodeURIComponent(nombre)}`
+    window.location.href = `${API_BASE_URL}/api/descargar-video?nombre=${encodeURIComponent(nombre)}`
   }
 
   const analizarVideo = async () => {
@@ -165,7 +168,7 @@ function App() {
 
     try {
       const respuesta = await fetch(
-        'http://127.0.0.1:5000/api/analizar',
+        `${API_BASE_URL}/api/analizar`,
         {
           method: 'POST',
           body: formData,
@@ -181,7 +184,7 @@ function App() {
       }
 
       setResultadoVideo(
-        `http://127.0.0.1:5000${datos.video}`
+        `${datos.video?.startsWith('http') ? datos.video : `${API_BASE_URL}${datos.video || ''}`}`
       )
 
       if (datos.metricas) {
@@ -237,7 +240,7 @@ function App() {
     if (!confirmar) return
 
     try {
-      await fetch('http://127.0.0.1:5000/api/analisis', {
+      await fetch(`${API_BASE_URL}/api/analisis`, {
         method: 'DELETE'
       })
     } catch (error) {
@@ -563,7 +566,7 @@ Reporte generado desde Football Performance.
               <source
                 src={
                   resultadoVideo ||
-                  'http://127.0.0.1:5000/resultados/output_video.mp4'
+                  'https://football-performance.onrender.com/resultados/output_video.mp4'
                 }
                 type="video/mp4"
               />
@@ -937,7 +940,7 @@ Reporte generado desde Football Performance.
               <source
                 src={
                   resultadoVideo ||
-                  'http://127.0.0.1:5000/resultados/output_video.mp4'
+                  'https://football-performance.onrender.com/resultados/output_video.mp4'
                 }
                 type="video/mp4"
               />
